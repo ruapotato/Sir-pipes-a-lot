@@ -66,11 +66,22 @@ chmod +x setup.sh
 source venv/bin/activate
 ```
 
+## Bits
+system_audio.py dumps audio going to the speakers to STDOUT. Example: Videos, applications
+mic.py dumps audio coming from the microphone to STDOUT.
+#TODO: segment.py Uses WebRTC VAD on STDIN from mic or system_audio, and buffers the output and formats for whisper.py
+#TODO: whisper.py steams data over STDIN from segment.py, processing the input when a pause in the input is detected
+
 ## Usage
 
 Run the application:
 ```bash
-python main.py
+# To dump system audio as text
+python3 ./system_audio.py --format raw | python3 ./segment.py | python3 ./whisper.py
+# To dump mic audio as text
+python3 ./mic.py --format raw | python3 ./segment.py | python3 ./whisper.py
+# To track both:
+#TODO: python main.py
 ```
 
 The GUI will provide controls for:
